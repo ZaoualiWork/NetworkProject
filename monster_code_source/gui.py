@@ -16,7 +16,7 @@ from guiwatch   import *
 from guiwindow  import *
 from guiframe   import *
 from uiconst    import *
-
+#commentaire russe
 def gui():
     Gui().main()
 
@@ -120,7 +120,7 @@ class Gui(object):
         self.costFrame.update()
         self.window.update_idletasks()
         self.window.update()
-        
+
         #Kill the splash screen and then show the main part of the programm
         splash.destroy()
         self.window.deiconify()
