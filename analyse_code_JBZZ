@@ -1,0 +1,184 @@
+#Analyse du code source Mon(s)tre by TEAMJBZZ
+
+main.pyw
+  @description
+     fichier principal apte à parser les arguments
+
+  @import
+      threading
+      argparse
+      watch
+      uiconst
+
+   @options
+        -> (--console)
+           args.console
+           import cli --> cli()
+
+        -> (--run)
+           args.run
+           algo = watch.EvAlgo()
+           ...
+           algo.start()
+
+        -> (--display)
+            args.displaywatch
+            from guiwatch import display_watch
+            display_watch(watch.openwatch(open(...))) //affiche le fichier sauvegardé
+
+        -> (None)
+           default_mode
+           gui.gui()
+
+uiconst.py
+    @description
+      déclaration des variables globales
+
+
+    @variables_utiles
+
+
+cli.py
+    @description
+        mode invité de commande
+
+    @import
+        watch
+        curses //module de gestion shell
+        cliaction
+
+    @classes
+        cli
+          - self.algo=watch.EvAlgo
+
+     @functions
+        cli
+          - curses.wrapper(cli().main)
+
+#Watch repertory
+      @information
+        __all__ : liste pour le module.Watch
+
+__init__.py
+
+      @description
+        import sous-classes + implementation __all__
+
+      @import
+        components
+        evalgo
+        filewatch
+        randwatch
+        scorewatch
+        watch
+
+components.py
+      @description
+        implémentation des pièces
+
+      @classes
+
+        - component
+
+        - Hand(component)
+
+        - Axis(component)
+
+        - GearWheel(component)
+            __init__(teethCount)
+
+        - Engine(component)
+            __init__(capacity)
+
+        - Balance(component)
+
+randwatch.py
+        @description
+          module de gestion de la génération aléatoire de montres
+
+        @import
+          random
+          component
+          watch
+
+        @functions
+          - random_component
+          - random_edges(w)
+          - random_watch()
+            w=liste composants
+          - fusion(father,mother)
+          - mutate(w)
+
+watch.py
+          @description
+
+          @import
+            random
+            copy
+            components
+            scorewatch
+
+          @variables_utiles
+            VALIDITY_CONDITION --> Matrice adjacence
+
+          @classes
+            - Watch
+                @arguments
+                  - self._ componentsCount = { type : val }
+
+                @functions
+                  - __iter__(self): parcours de self
+                  - search_component()
+                  - remove()
+                  - replace()
+                  - is_valid_component()
+                  - is_valid_edge()
+                  - is_cyclic()
+                  - is_valid_subwath()
+
+scorewatch.py
+          @description
+            calcul du  fitness
+
+          @functions
+            - calcAutonomy(w)
+            - calcCost(w)
+            - sensAiguilles(w)
+            - elementary(w)
+            - gear_different_speeds(w)
+            - different_speeds(w)
+            - isDifferentRatio
+            - knownTimeRatio
+            - gaussienne
+            - score_watch
+
+EvAlgo.py
+            @description
+
+            @classes
+              - EvAlgo(thread)
+
+                @functions
+                  - __init__ : //definitions variables_utiles
+                  - run()
+                    self.pop : liste random_watch
+                  - update
+                  - evolve
+                        retainCount -- parentsCount
+                        pop[retained:parents:selected_monsters]
+                           selon selection individus+criteres --> parents
+                             retained -(mutate)->
+                           + parents  -(mutate)->
+                            ------- (  ) -------
+                               parents
+                                -> division (2x) --(fusion)-->child
+
+                              self.pop = parents + child 
+
+
+                  - stop
+                  - reset
+                  - resume
+                  - end
+                  - is_stopped
+                  - is_running
